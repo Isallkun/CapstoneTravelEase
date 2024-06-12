@@ -1,7 +1,23 @@
+# Gunakan image dasar node yang sesuai
 FROM node:14.21.2-alpine
+
+# Setel direktori kerja di dalam container
 WORKDIR /app
-ENV PORT 3000
+
+# Salin file package.json dan package-lock.json untuk menginstal dependencies terlebih dahulu
+COPY package*.json ./
+
+# Instal dependencies
+RUN npm install
+
+# Salin seluruh file proyek ke dalam container
 COPY . .
-RUN npm install 
+
+# Setel environment variable untuk port
+ENV PORT 3000
+
+# Ekspose port yang akan digunakan oleh aplikasi
 EXPOSE 3000
+
+# Perintah untuk menjalankan aplikasi
 CMD ["npm", "run", "start"]
